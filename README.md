@@ -1,11 +1,11 @@
-#fetchart_extra
+fetchart_extra
 
 A beets
- plugin that extends the built-in fetchart functionality to download additional album artwork types: discart (CD art), back covers, and spines.
+ plugin that extends the built-in fetchart to download extra album artwork: discart (CD art), back covers, and spines.
 
 ✨ Features
 
-Fetches discart, back covers, and spines from multiple online sources
+Fetches artwork from multiple sources:
 
 Fanart.tv
 
@@ -13,17 +13,17 @@ TheAudioDB
 
 MusicBrainz Cover Art Archive
 
-Checks your local filesystem first before downloading (avoids duplicates).
+Checks the filesystem first before downloading.
 
-Handles multi-disc albums: saves discart.png or discart1.png, discart2.png, etc.
+Handles multi-disc albums (discart1.png, discart2.png, …).
 
-Normalizes all output images to PNG.
+Normalizes output to PNG.
 
-Automatically:
+Automatic post-processing:
 
-Removes white backgrounds from discart using ImageMagick (magick).
+Removes white disc backgrounds using ImageMagick.
 
-Resizes images to configurable defaults:
+Resizes to configurable dimensions:
 
 discart → 1000×1000
 
@@ -31,13 +31,15 @@ back → 750×750
 
 spine → 35×700
 
-Configurable fuzz factor for background removal.
+Configurable fuzz tolerance for background removal.
 
-Robust error handling: skips gracefully if a source API is unavailable or returns invalid data.
+Resilient networking: skips gracefully on timeouts or SSL issues.
 
-Detailed logging: shows which source provided each artwork.
+Verbose logs: shows which source provided each artwork.
 
-fetchart_extra:
+plugins: fetchart_extra
+
+# fetchart_extra:
   fanarttv_key: YOUR_FANARTTV_API_KEY
   theaudiodb_key: YOUR_AUDIO_DB_API_KEY
   sources: [fanarttv, theaudiodb, musicbrainz]
@@ -55,8 +57,25 @@ fetchart_extra:
 ✔ back ready for Gotye – Making Mirrors (from musicbrainz)
 → Skipping spine: MusicBrainz does not provide spine images
 ✔ spine ready for 12 Stones – Picture Perfect (from theaudiodb)
+⚠ No valid back found for Artist – Album
 
 
 📦 Installation
 
-Drop fetchart_extra.py into your beetsplug directory (e.g. /config/beetsplug/) and enable it in your beets config under plugins:.
+Copy fetchart_extra.py into your beetsplug directory (e.g. /config/beetsplug/).
+
+Enable it in your beets config under plugins.
+
+Configure API keys (Fanart.tv and TheAudioDB).
+
+Run beet fetchart_extra or let it run automatically during imports.
+
+📌 Notes
+
+MusicBrainz does not provide spine art. Only Fanart.tv and TheAudioDB do.
+
+All artwork is saved in PNG format regardless of source.
+
+Multi-disc albums create discart1.png, discart2.png, etc.
+
+If a source API fails, the plugin skips gracefully and tries the next.
