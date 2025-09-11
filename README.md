@@ -36,3 +36,27 @@ Configurable fuzz factor for background removal.
 Robust error handling: skips gracefully if a source API is unavailable or returns invalid data.
 
 Detailed logging: shows which source provided each artwork.
+
+fetchart_extra:
+  fanarttv_key: YOUR_FANARTTV_API_KEY
+  theaudiodb_key: YOUR_AUDIO_DB_API_KEY
+  sources: [fanarttv, theaudiodb, musicbrainz]
+  types: [discart, spine, back]
+  run_on_import: yes
+  resize:
+    enabled: yes
+    discart: [1000, 1000]
+    back: [750, 750]
+    spine: [35, 700]
+  fuzz: 15%
+
+
+✔ discart ready for BABYMETAL – BABYMETAL (from fanarttv)
+✔ back ready for Gotye – Making Mirrors (from musicbrainz)
+→ Skipping spine: MusicBrainz does not provide spine images
+✔ spine ready for 12 Stones – Picture Perfect (from theaudiodb)
+
+
+📦 Installation
+
+Drop fetchart_extra.py into your beetsplug directory (e.g. /config/beetsplug/) and enable it in your beets config under plugins:.
