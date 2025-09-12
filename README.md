@@ -1,11 +1,20 @@
-# fetchart_extra
+fetchart_extra
 
 A beets
- plugin that extends the built-in fetchart to download extra album artwork: discart (CD art), back covers, and spines.
+ plugin that extends the built-in fetchart to download and manage extra album artwork: discart (CD art), back covers, and spines.
+It checks your filesystem first, then fetches from multiple sources, and applies post-processing so your artwork is consistent, clean, and properly sized.
 
 ✨ Features
 
-Fetches artwork from multiple sources:
+Artwork types supported:
+
+Discart (CD label art)
+
+Back covers
+
+Spines
+
+Sources:
 
 Fanart.tv
 
@@ -13,33 +22,41 @@ TheAudioDB
 
 MusicBrainz Cover Art Archive
 
-Checks the filesystem first before downloading.
+Filesystem check first — skips download if the art already exists.
 
-Handles multi-disc albums (discart1.png, discart2.png, …).
+Multi-disc support — saves multiple discarts as discart1.png, discart2.png, etc.
 
-Normalizes output to PNG.
+PNG output normalization — all saved artwork is converted to .png.
 
 Automatic post-processing:
 
-Removes white disc backgrounds using ImageMagick.
+Removes white backgrounds from discart (with multi-corner + center floodfill).
 
-Resizes to configurable dimensions:
+Resizes each artwork type:
 
-discart → 1000×1000
+Discart → 1000×1000 px
 
-back → 750×750
+Back → 750×750 px
 
-spine → 35×700
+Spine → 35×700 px
 
 Configurable fuzz tolerance for background removal.
 
-Resilient networking: skips gracefully on timeouts or SSL issues.
+Resilient networking — handles timeouts and SSL errors gracefully.
 
-Verbose logs: shows which source provided each artwork.
+Logging:
+
+By default, only warnings are shown.
+
+Run with -v to see detailed logs about fetching, saving, resizing, and cleaning.
+
+⚙️ Configuration
+
+Add to your config.yaml:
 
 plugins: fetchart_extra
 
-# fetchart_extra:
+fetchart_extra:
   fanarttv_key: YOUR_FANARTTV_API_KEY
   theaudiodb_key: YOUR_AUDIO_DB_API_KEY
   sources: [fanarttv, theaudiodb, musicbrainz]
@@ -51,13 +68,25 @@ plugins: fetchart_extra
     back: [750, 750]
     spine: [35, 700]
   fuzz: 15%
+  background:
+    multi_corner: yes
 
 
-✔ discart ready for BABYMETAL – BABYMETAL (from fanarttv)
-✔ back ready for Gotye – Making Mirrors (from musicbrainz)
-→ Skipping spine: MusicBrainz does not provide spine images
-✔ spine ready for 12 Stones – Picture Perfect (from theaudiodb)
-⚠ No valid back found for Artist – Album
+sources: Priority order. First source that returns valid art wins.
+
+types: Choose which artwork to fetch.
+
+run_on_import: Automatically fetch on album import.
+
+resize: Dimensions per art type.
+
+fuzz: Tolerance for background removal.
+
+background.multi_corner:
+
+yes → removes background from all four edges + center hole.
+
+no → only removes background from the top-left edge.
 
 
 📦 Installation
@@ -66,16 +95,65 @@ Copy fetchart_extra.py into your beetsplug directory (e.g. /config/beetsplug/).
 
 Enable it in your beets config under plugins.
 
-Configure API keys (Fanart.tv and TheAudioDB).
+Add your API keys (Fanart.tv and TheAudioDB).
 
-Run beet fetchart_extra or let it run automatically during imports.
+Run manually or let it process automatically on import.
+
+🚀 Usage
+Manual run
+beet fetchart_extra
+
+Pretend mode
+
+See what would happen without downloading:
+
+beet fetchart_extra --pretend
+
+Verbose logs
+beet -v fetchart_extra
+
+📝 Example Output
+
+With -v:
+
+✔ discart ready for BABYMETAL – BABYMETAL (from fanarttv)
+✔ back ready for Gotye – Making Mirrors (from musicbrainz)
+→ Skipping spine: MusicBrainz does not provide spine images
+✔ spine ready for 12 Stones – Picture Perfect (from theaudiodb)
+⚠ No valid back found for Artist – Album
+
+
+Without -v:
+Only warnings and errors:
+
+⚠ No valid back found for Artist – Album
 
 📌 Notes
 
-MusicBrainz does not provide spine art. Only Fanart.tv and TheAudioDB do.
+MusicBrainz does not provide spine art; only Fanart.tv and TheAudioDB do.
 
-All artwork is saved in PNG format regardless of source.
+All output files are saved as .png.
 
-Multi-disc albums create discart1.png, discart2.png, etc.
+Multi-disc albums → discart1.png, discart2.png, etc.
 
-If a source API fails, the plugin skips gracefully and tries the next.
+If a source API fails, the plugin skips to the next source gracefully.
+
+Works alongside beets’ built-in fetchart if you want both, but recommended to use this plugin for discart/back/spine while letting fetchart manage only front covers.
+
+🔧 Troubleshooting
+
+ImageMagick errors
+Ensure ImageMagick v7 is installed. If convert is deprecated, use magick in your PATH.
+
+White center hole not removed
+Enable background.multi_corner: yes to also floodfill from the disc center.
+
+No results from sources
+
+Verify your API keys are valid.
+
+Try reordering sources in config.
+
+📜 License
+
+MIT
