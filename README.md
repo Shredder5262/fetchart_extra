@@ -168,7 +168,8 @@ No results from sources
 Verify your API keys are valid.
 
 Try reordering sources in config.
-
+---
 📜 License
 
 MIT
+---
