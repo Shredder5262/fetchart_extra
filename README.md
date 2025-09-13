@@ -1,4 +1,4 @@
-#fetchart_extra
+# fetchart_extra
 
 A beets
  plugin that extends the built-in fetchart to download and manage extra album artwork: discart (CD art), back covers, and spines.
