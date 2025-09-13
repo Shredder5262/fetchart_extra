@@ -4,7 +4,8 @@ A beets
  plugin that extends the built-in fetchart to download and manage extra album artwork: discart (CD art), back covers, and spines.
 It checks your filesystem first, then fetches from multiple sources, and applies post-processing so your artwork is consistent, clean, and properly sized.
 
-<br>
+---
+
 
 ✨ Features
 
@@ -52,7 +53,8 @@ By default, only warnings are shown.
 
 Run with -v to see detailed logs about fetching, saving, resizing, and cleaning.
 
-<br>
+---
+
 
 ⚙️ Configuration
 
@@ -92,6 +94,7 @@ yes → removes background from all four edges + center hole.
 
 no → only removes background from the top-left edge.
 
+---
 
 📦 Installation
 
@@ -102,6 +105,7 @@ Enable it in your beets config under plugins.
 Add your API keys (Fanart.tv and TheAudioDB).
 
 Run manually or let it process automatically on import.
+---
 
 🚀 Usage
 Manual run
@@ -118,6 +122,7 @@ Verbose logs
 ```
 beet -v fetchart_extra
 ```
+---
 
 📝 Example Output
 
@@ -135,6 +140,7 @@ Only warnings and errors:
 ```
 ⚠ No valid back found for Artist – Album
 ```
+---
 
 📌 Notes
 
@@ -147,6 +153,7 @@ Multi-disc albums → discart1.png, discart2.png, etc.
 If a source API fails, the plugin skips to the next source gracefully.
 
 Works alongside beets’ built-in fetchart if you want both, but recommended to use this plugin for discart/back/spine while letting fetchart manage only front covers.
+---
 
 🔧 Troubleshooting
 
