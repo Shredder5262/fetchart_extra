@@ -53,7 +53,7 @@ Run with -v to see detailed logs about fetching, saving, resizing, and cleaning.
 ⚙️ Configuration
 
 Add to your config.yaml:
-
+```yaml
 plugins: fetchart_extra
 
 fetchart_extra:
@@ -70,7 +70,7 @@ fetchart_extra:
   fuzz: 15%
   background:
     multi_corner: yes
-
+```
 
 sources: Priority order. First source that returns valid art wins.
 
@@ -101,32 +101,36 @@ Run manually or let it process automatically on import.
 
 🚀 Usage
 Manual run
+```
 beet fetchart_extra
-
+```
 Pretend mode
 
 See what would happen without downloading:
-
+```
 beet fetchart_extra --pretend
-
+```
 Verbose logs
+```
 beet -v fetchart_extra
+```
 
 📝 Example Output
 
 With -v:
-
+```
 ✔ discart ready for BABYMETAL – BABYMETAL (from fanarttv)
 ✔ back ready for Gotye – Making Mirrors (from musicbrainz)
 → Skipping spine: MusicBrainz does not provide spine images
 ✔ spine ready for 12 Stones – Picture Perfect (from theaudiodb)
 ⚠ No valid back found for Artist – Album
-
+```
 
 Without -v:
 Only warnings and errors:
-
+```
 ⚠ No valid back found for Artist – Album
+```
 
 📌 Notes
 
