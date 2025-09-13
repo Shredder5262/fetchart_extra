@@ -4,6 +4,8 @@ A beets
  plugin that extends the built-in fetchart to download and manage extra album artwork: discart (CD art), back covers, and spines.
 It checks your filesystem first, then fetches from multiple sources, and applies post-processing so your artwork is consistent, clean, and properly sized.
 
+<br>
+
 ✨ Features
 
 Artwork types supported:
@@ -49,6 +51,8 @@ Logging:
 By default, only warnings are shown.
 
 Run with -v to see detailed logs about fetching, saving, resizing, and cleaning.
+
+<br>
 
 ⚙️ Configuration
 
